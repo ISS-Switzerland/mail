@@ -29,6 +29,7 @@ module Mail # :doc:
 
   require 'mail/core_extensions/string'
   require 'mail/core_extensions/smtp'
+  require 'mail/core_extensions/imap'
   require 'mail/indifferent_hash'
 
   require 'mail/multibyte'

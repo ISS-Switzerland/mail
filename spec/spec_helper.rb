@@ -93,6 +93,7 @@ class MockSMTP
 
   def start(*args)
     if block_given?
+      @@xauth = args.last(2)
       return yield(self)
     else
       return self
@@ -101,6 +102,10 @@ class MockSMTP
 
   def finish
     return true
+  end
+
+  def self.xauth
+    @@xauth
   end
 
   def self.clear_deliveries

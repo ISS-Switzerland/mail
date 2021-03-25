@@ -312,6 +312,15 @@ describe "IMAP Retriever" do
       end
       Mail.find
     end
+    it "should be ready for oauth2 token auth" do
+      expect(@imap).to receive(:authenticate).with('XOAUTH2', 'foo', 'ABC12345')
+      expect(@imap).not_to receive(:login)
+      Mail.defaults do
+        retriever_method :imap, {:authentication => 'xoauth2', :user_name => 'foo'}
+        token 'ABC12345'
+      end
+      Mail.find
+    end
   end
 
 end

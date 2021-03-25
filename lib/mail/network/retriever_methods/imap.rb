@@ -168,8 +168,11 @@ module Mail
 
         imap.starttls if settings[:enable_starttls]
 
-        if settings[:authentication].nil?
+        case settings[:authentication]
+        when nil
           imap.login(settings[:user_name], settings[:password])
+        when 'xoauth2'
+          imap.authenticate('XOAUTH2', settings[:user_name], Mail::Configuration.instance.token)
         else
           # Note that Net::IMAP#authenticate('LOGIN', ...) is not equal with Net::IMAP#login(...)!
           # (see also http://www.ensta.fr/~diam/ruby/online/ruby-doc-stdlib/libdoc/net/imap/rdoc/classes/Net/IMAP.html#M000718)

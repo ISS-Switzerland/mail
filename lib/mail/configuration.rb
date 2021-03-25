@@ -73,6 +73,8 @@ module Mail
       value ? @encode_language = value : @encode_language ||= 'en'
     end
 
+    def token(value = nil)
+      value ? @token = value : @token
+    end
   end
-
 end
