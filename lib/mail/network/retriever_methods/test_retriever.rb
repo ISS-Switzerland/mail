@@ -5,16 +5,25 @@ module Mail
 
   class TestRetriever < Retriever
 
+    def initialize(values)
+      @@emails = []
+      self.settings = { :address              => "localhost",
+                        :port                 => 143,
+                        :user_name            => nil,
+                        :password             => nil,
+                        :authentication       => nil,
+                        :enable_ssl           => false,
+                        :enable_starttls      => false }.merge!(values)
+    end
+
+    attr_accessor :settings
+
     def self.emails
       @@emails
     end
 
     def self.emails=(val)
       @@emails = val
-    end
-
-    def initialize(values)
-      @@emails = []
     end
 
     def find(options = {}, &block)

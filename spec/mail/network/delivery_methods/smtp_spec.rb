@@ -246,6 +246,32 @@ describe "SMTP Delivery Method" do
     end
   end
 
+  describe 'enable XOAUTH2 authentication' do
+    let(:message) {
+      Mail.new do
+        from 'mikel@test.lindsaar.net'
+        to 'ada@test.lindsaar.net'
+        subject 'Re: No way!'
+        body 'Yeah sure'
+      end
+    }
+    it 'returns properly configured smtp connection' do
+      Mail.defaults do
+        delivery_method :smtp,
+                        :address => 'smtp.mockup.com',
+                        :port => 25,
+                        :user_name => 'foo',
+                        :password => nil,
+                        :authentication => 'xoauth2'
+        token 'ABC12345'
+      end
+
+      message.deliver!
+
+      expect(MockSMTP.xauth).to eq (%w[ABC12345 xoauth2])
+    end
+  end
+
   describe "SMTP Envelope" do
 
     it "uses the envelope From and To addresses" do

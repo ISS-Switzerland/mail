@@ -106,7 +106,8 @@ module Mail
 
     private
       def start_smtp_session(&block)
-        build_smtp_session.start(settings[:domain], settings[:user_name], settings[:password], settings[:authentication], &block)
+        secret = settings[:authentication] == 'xoauth2' ? Mail::Configuration.instance.token : settings[:password]
+        build_smtp_session.start(settings[:domain], settings[:user_name], secret, settings[:authentication], &block)
       end
 
       def build_smtp_session

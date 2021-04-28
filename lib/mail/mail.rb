@@ -109,6 +109,19 @@ module Mail
     Configuration.instance.retriever_method
   end
 
+  # Set oauth2 token
+  def self.set_token(value)
+    Configuration.instance.token(value)
+  end
+
+  # Returns auth methods to check do we need token for xoauth2 or not
+  def self.auth_methods
+    [
+      Configuration.instance.delivery_method.settings[:authentication],
+      Configuration.instance.retriever_method.settings[:authentication]
+    ]
+  end
+
   # Send an email using the default configuration.  You do need to set a default
   # configuration first before you use self.deliver, if you don't, an appropriate
   # error will be raised telling you to.
